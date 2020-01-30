@@ -46,32 +46,15 @@ var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
+// getting random element from array
+var getRandomArrayElement = function (array) {
+  var arrayIndex = getRandomInt(0, array.length - 1);
+  return array[arrayIndex];
+};
+
 //  getting the name of mage
-var generatedFirstName = function () {
-  var firstNameIndex = getRandomInt(0, FIRST_NAMES.length - 1);
-  return FIRST_NAMES[firstNameIndex];
-};
-var generatedSurname = function () {
-  var surnameIndex = getRandomInt(0, SURNAMES.length - 1);
-  return SURNAMES[surnameIndex];
-};
-
 var nameConcatenation = function () {
-  return generatedFirstName() + ' ' + generatedSurname();
-};
-
-//  getting the coat color of mage
-
-var generatedCoatColor = function () {
-  var coatColorIndex = getRandomInt(0, COAT_COLORS.length - 1);
-  return COAT_COLORS[coatColorIndex];
-};
-
-//  getting eyes' color of mage
-
-var generatedEyeColor = function () {
-  var eyeColorIndex = getRandomInt(0, EYES_COLORS.length - 1);
-  return EYES_COLORS[eyeColorIndex];
+  return getRandomArrayElement(FIRST_NAMES) + ' ' + getRandomArrayElement(SURNAMES);
 };
 
 // creating object
@@ -79,8 +62,8 @@ var generatedEyeColor = function () {
 var createMageFeatures = function () {
   var mageFeatures = {
     name: nameConcatenation(),
-    coatColor: generatedCoatColor(),
-    eyesColor: generatedEyeColor(),
+    coatColor: getRandomArrayElement(COAT_COLORS),
+    eyesColor: getRandomArrayElement(EYES_COLORS),
   };
   return mageFeatures;
 };
