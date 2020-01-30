@@ -91,24 +91,29 @@ for (var i = 0; i < MAGES_AMOUNT; i++) {
   mages.push(createMageFeatures());
 }
 
-//  adding mage array to DOM
-// for () {
-
-// };
+// searching elements
 var similarListElement = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template')
   .content
   .querySelector('.setup-similar-item');
 
-for (var j = 0; j < MAGES_AMOUNT; j++) {
+// creating DOM element for mage
+var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
 
-  similarListElement.appendChild(wizardElement);
-  wizardElement.querySelector('.setup-similar-label').textContent = WIZARD_NAMES[i];
-}
+  wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
+  wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
+  wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
 
-//  adding name to template
-var writtenName = document.querySelector('.setup-similar-label');
-writtenName.textContent = '';
-// console.log(mages);
+  return wizardElement;
+};
+
+// appending rendered mages to DOM
+var fragment = document.createDocumentFragment();
+for (var j = 0; j < mages.length; j++) {
+  fragment.appendChild(renderWizard(mages[j]));
+}
+similarListElement.appendChild(fragment);
+
+document.querySelector('.setup-similar').classList.remove('hidden');
 
