@@ -1,6 +1,6 @@
 'use strict';
 
-var MAGES_AMOUNT = 4;
+var MAGE_AMOUNT = 4;
 
 var FIRST_NAMES = [
   'Иван',
@@ -35,44 +35,40 @@ var COAT_COLORS = [
 
 var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 
-// showed up set-up window
-var setUp = document.querySelector('.setup');
-setUp.classList.remove('hidden');
-
 //  general random function
-var getRandomInt = function (min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
+var getRandomInteger = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
 // getting random element from array
 var getRandomArrayElement = function (array) {
-  var arrayIndex = getRandomInt(0, array.length - 1);
-  return array[arrayIndex];
+  return array[getRandomInteger(0, array.length - 1)];
 };
 
 //  getting the name of mage
-var nameConcatenation = function () {
+var getRandomName = function () {
   return getRandomArrayElement(FIRST_NAMES) + ' ' + getRandomArrayElement(SURNAMES);
 };
 
 // creating object
 
-var createMageFeatures = function () {
-  var mageFeatures = {
-    name: nameConcatenation(),
+var generateMages = function () {
+  return {
+    name: getRandomName(),
     coatColor: getRandomArrayElement(COAT_COLORS),
     eyesColor: getRandomArrayElement(EYES_COLORS),
   };
-  return mageFeatures;
 };
 
 //  creating mage array
-var mages = [];
-for (var i = 0; i < MAGES_AMOUNT; i++) {
-  mages.push(createMageFeatures());
-}
+var generateNumberOfMage = function () {
+  var mages = [];
+  for (var i = 0; i < MAGE_AMOUNT; i++) {
+    mages.push(generateMages());
+  }
+  return mages;
+};
+var mages = generateNumberOfMage(MAGE_AMOUNT);
 
 // searching elements
 var similarListElement = document.querySelector('.setup-similar-list');
@@ -92,11 +88,14 @@ var renderWizard = function (wizard) {
 };
 
 // appending rendered mages to DOM
-var fragment = document.createDocumentFragment();
-for (var j = 0; j < mages.length; j++) {
-  fragment.appendChild(renderWizard(mages[j]));
+var renderMagesToDom = document.createDocumentFragment();
+for (var i = 0; i < mages.length; i++) {
+  renderMagesToDom.appendChild(renderWizard(mages[i]));
 }
-similarListElement.appendChild(fragment);
+similarListElement.appendChild(renderMagesToDom);
 
 document.querySelector('.setup-similar').classList.remove('hidden');
 
+// showed up set-up window
+var setup = document.querySelector('.setup');
+setup.classList.remove('hidden');
