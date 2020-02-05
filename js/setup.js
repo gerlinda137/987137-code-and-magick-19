@@ -97,5 +97,61 @@ similarListElement.appendChild(renderMagesToDom);
 document.querySelector('.setup-similar').classList.remove('hidden');
 
 // showed up set-up window
+var ESC_KEY = 'Escape';
+var ENTER_KEY = 'Enter';
+
 var setup = document.querySelector('.setup');
-setup.classList.remove('hidden');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setup.querySelector('.setup-close');
+
+var onPopupEscPress = function (evt) {
+  if (evt.key === ESC_KEY) {
+    closePopup();
+  }
+};
+
+var openPopup = function () {
+  setup.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+var closePopup = function () {
+  setup.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.key === ENTER_KEY) {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.key === ENTER_KEY) {
+    closePopup();
+  }
+});
+
+var setUpWizardCoat = document.querySelector('.setup-wizard .wizard-coat');
+var inputCoatColor = document.querySelector('.setup-wizard-appearance input[name=coat-color]');
+setUpWizardCoat.addEventListener('click', function () {
+  var generatedCoatColor = getRandomArrayElement(COAT_COLORS);
+  setUpWizardCoat.style.fill = generatedCoatColor;
+  inputCoatColor.value = generatedCoatColor;
+});
+
+var setUpWizardEyes = document.querySelector('.setup-wizard .wizard-eyes');
+var inputEyesColor = document.querySelector('.setup-wizard-appearance input[name=eyes-color]');
+setUpWizardEyes.addEventListener('click', function () {
+  var generatedEyesColor = getRandomArrayElement(EYES_COLORS);
+  setUpWizardEyes.style.fill = generatedEyesColor;
+  inputEyesColor.value = generatedEyesColor;
+});
