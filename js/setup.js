@@ -35,6 +35,14 @@ var COAT_COLORS = [
 
 var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 
+var FIREBALL_COLORS = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848',
+];
+
 //  general random function
 var getRandomInteger = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -42,7 +50,7 @@ var getRandomInteger = function (min, max) {
 
 // getting random element from array
 var getRandomArrayElement = function (array) {
-  return array[getRandomInteger(0, array.length - 1)];
+  return array[getRandomInteger(0, array.length)];
 };
 
 //  getting the name of mage
@@ -104,8 +112,9 @@ var setup = document.querySelector('.setup');
 var setupOpen = document.querySelector('.setup-open');
 var setupClose = setup.querySelector('.setup-close');
 
+var setupName = document.querySelector('.setup-user-name');
 var onPopupEscPress = function (evt) {
-  if (evt.key === ESC_KEY) {
+  if (evt.key === ESC_KEY && setupName !== document.activeElement) {
     closePopup();
   }
 };
@@ -154,4 +163,12 @@ setUpWizardEyes.addEventListener('click', function () {
   var generatedEyesColor = getRandomArrayElement(EYES_COLORS);
   setUpWizardEyes.style.fill = generatedEyesColor;
   inputEyesColor.value = generatedEyesColor;
+});
+
+var setUpFireball = document.querySelector('.setup-fireball-wrap');
+var inputFireballColor = document.querySelector('.setup-fireball-wrap input[name=fireball-color]');
+setUpFireball.addEventListener('click', function () {
+  var generateFireballColor = getRandomArrayElement(FIREBALL_COLORS);
+  setUpFireball.style.background = generateFireballColor;
+  inputFireballColor.value = generateFireballColor;
 });
