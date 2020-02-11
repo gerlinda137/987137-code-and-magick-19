@@ -35,6 +35,14 @@ var COAT_COLORS = [
 
 var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 
+var FIREBALL_COLORS = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848',
+];
+
 //  general random function
 var getRandomInteger = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -42,7 +50,7 @@ var getRandomInteger = function (min, max) {
 
 // getting random element from array
 var getRandomArrayElement = function (array) {
-  return array[getRandomInteger(0, array.length - 1)];
+  return array[getRandomInteger(0, array.length)];
 };
 
 //  getting the name of mage
@@ -97,5 +105,73 @@ similarListElement.appendChild(renderMagesToDom);
 document.querySelector('.setup-similar').classList.remove('hidden');
 
 // showed up set-up window
+var ESC_KEY = 'Escape';
+var ENTER_KEY = 'Enter';
+var isEnterKey = function (evt) {
+  return evt.key === ENTER_KEY;
+};
+
 var setup = document.querySelector('.setup');
-setup.classList.remove('hidden');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setup.querySelector('.setup-close');
+
+var setupNameInput = setup.querySelector('.setup-user-name');
+var onPopupEscPress = function (evt) {
+  if (evt.key === ESC_KEY && setupNameInput !== document.activeElement) {
+    closePopup();
+  }
+};
+
+var openPopup = function () {
+  setup.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+var closePopup = function () {
+  setup.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (isEnterKey(evt)) {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (isEnterKey(evt)) {
+    closePopup();
+  }
+});
+
+var setupPlayer = setup.querySelector('.setup-player');
+
+var wizardCoat = setupPlayer.querySelector('.setup-wizard .wizard-coat');
+var wizardCoatInput = setupPlayer.querySelector('.setup-wizard-appearance input[name=coat-color]');
+wizardCoat.addEventListener('click', function () {
+  wizardCoatInput.value = wizardCoat.style.fill = getRandomArrayElement(COAT_COLORS);
+});
+
+var wizardEyes = setupPlayer.querySelector('.setup-wizard .wizard-eyes');
+var wizardEyesInput = setupPlayer.querySelector('.setup-wizard-appearance input[name=eyes-color]');
+wizardEyes.addEventListener('click', function () {
+  var generatedEyesColor = getRandomArrayElement(EYES_COLORS);
+  wizardEyes.style.fill = generatedEyesColor;
+  wizardEyesInput.value = generatedEyesColor;
+});
+
+var wizardFireball = setupPlayer.querySelector('.setup-fireball-wrap');
+var wizardFireballInput = setupPlayer.querySelector('.setup-fireball-wrap input[name=fireball-color]');
+wizardFireball.addEventListener('click', function () {
+  var generateFireballColor = getRandomArrayElement(FIREBALL_COLORS);
+  wizardFireball.style.background = generateFireballColor;
+  wizardFireballInput.value = generateFireballColor;
+});
