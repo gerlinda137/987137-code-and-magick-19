@@ -5,6 +5,11 @@
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = setup.querySelector('.setup-close');
 
+  var defaultSetupCoordinates = {
+    x: setup.style.left,
+    y: setup.style.top
+  };
+
   var setupNameInput = setup.querySelector('.setup-user-name');
   var onPopupEscPress = function (evt) {
     if (window.util.isEscKey(evt) && setupNameInput !== document.activeElement) {
@@ -15,6 +20,8 @@
   var openPopup = function () {
     setup.classList.remove('hidden');
     document.addEventListener('keydown', onPopupEscPress);
+    setup.style.top = defaultSetupCoordinates.y;
+    setup.style.left = defaultSetupCoordinates.x;
   };
 
   var closePopup = function () {
@@ -41,5 +48,6 @@
       closePopup();
     }
   });
+
 })();
 
